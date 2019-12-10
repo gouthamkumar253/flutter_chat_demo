@@ -74,9 +74,9 @@ class _ChatScreenState extends State<ChatScreen> {
       final ChatMessage message = ChatMessage(text: '', user: user, image: url);
 
       final DocumentReference documentReference = Firestore.instance
-          .collection('messages')
-          .document(DateTime.now().millisecondsSinceEpoch.toString());
-
+          .collection('chats')
+          .document(chatId)
+          .collection('messages').document(DateTime.now().millisecondsSinceEpoch.toString());
       Firestore.instance.runTransaction((Transaction transaction) async {
         await transaction.set(
           documentReference,
