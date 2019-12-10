@@ -1,3 +1,4 @@
+import 'package:chat_app/utils/toast_display.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/services/authentication.dart';
 
@@ -45,6 +46,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         } else {
           userId = await widget.auth.signUp(_email, _password);
           print('Signed up user: $userId');
+          ToastMessage().showToast('Sign up successful. Please sign in', 3, context);
         }
         setState(() {
           _isLoading = false;
@@ -55,6 +57,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         }
       } catch (e) {
         print('Error: $e');
+
         setState(() {
           _isLoading = false;
           _errorMessage = e.message;
@@ -130,13 +133,15 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showErrorMessage() {
     if (_errorMessage.isNotEmpty && _errorMessage != null) {
-      return Text(
-        _errorMessage,
-        style: TextStyle(
-            fontSize: 13.0,
-            color: Colors.red,
-            height: 1.0,
-            fontWeight: FontWeight.w300),
+      return Center(
+        child: Text(
+          _errorMessage,
+          style: TextStyle(
+              fontSize: 13.0,
+              color: Colors.red,
+              height: 1.0,
+              fontWeight: FontWeight.w300),
+        ),
       );
     } else {
       return Container(
